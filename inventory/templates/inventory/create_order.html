@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create New Order</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <style>
+        body {
+            background-color: #3cb371;
+        }
+
+        .container {
+            margin-top: 100px;
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h2 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #343a40;
+        }
+
+        label {
+            font-weight: bold;
+        }
+
+        .btn-success {
+            width: 100%;
+            padding: 10px;
+            font-size: 18px;
+            background-color: #3cb371;
+            border: none;
+        }
+
+        .btn-back-home {
+            position: fixed;
+            top: 10px;
+            left: 10px;
+            background-color: #006400;
+            color: white;
+            padding: 10px 20px;
+            text-align: center;
+            border-radius: 5px;
+            font-weight: bold;
+            text-decoration: none;
+        }
+
+        .btn-back-home:hover {
+            background-color: #004d00;
+            color: white;
+        }
+
+        .alert-success {
+            color: blue; /* Change success message color to blue */
+        }
+
+        .alert-error {
+            color: red; /* Change warning message color to red */
+        }
+
+        .alert {
+            margin-bottom: 20px; /* Spacing for messages */
+            padding: 15px; /* Padding for messages */
+            border-radius: 5px; /* Rounded corners */
+        }
+    </style>
+</head>
+<body>
+
+    <a href="{% url 'home' %}" class="btn-back-home">← Back to Home</a>
+
+    <div class="container">
+        <h2>Create New Order</h2>
+
+        <!-- Display messages for success and error -->
+        <div>
+            {% if messages %}
+                {% for message in messages %}
+                    <div class="alert alert-{{ message.tags }}">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            {% endif %}
+        </div>
+
+        <!-- Order Form -->
+        <form method="post">
+            {% csrf_token %}
+            
+            <!-- Customer Name -->
+            <div class="form-group">
+                {{ form.customer_name.label_tag }}
+                {{ form.customer_name }}
+            </div>
+
+            <!-- Product Dropdown -->
+            <div class="form-group">
+                {{ form.product.label_tag }}
+                {{ form.product }}
+            </div>
+
+            <!-- Product Price -->
+            <div class="form-group">
+                <label for="product_price">Product Price:</label>
+                <input type="text" id="product_price" class="form-control" readonly>
+            </div>
+
+            <!-- Quantity -->
+            <div class="form-group">
+                {{ form.quantity.label_tag }}
+                {{ form.quantity }}
+            </div>
+
+            <!-- Submit Button -->
+            <button type="submit" class="btn btn-success">Submit Order</button>
+        </form>
+    </div>
+
+    <script>
+        document.getElementById('id_product').addEventListener('change', function() {
+            const selectedProduct = this.options[this.selectedIndex];
+            const productPrice = selectedProduct.getAttribute('data-price');
+            document.getElementById('product_price').value = productPrice;
+        });
+    </script>
+</body>
+</html>

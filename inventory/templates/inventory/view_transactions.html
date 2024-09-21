@@ -1,0 +1,121 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>View Transactions</title>
+    <link rel="stylesheet" href="{% static 'your_css_file.css' %}"> <!-- Optional CSS -->
+    <style>
+        body {
+            background-color: #3cb371;
+            padding-top: 50px;
+        }
+        
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        th, td {
+            padding: 10px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        th {
+            background-color: #f2f2f2;
+            font-weight: bold;
+        }
+
+        .btn {
+            padding: 10px 15px;
+            border: none;
+            border-radius: 5px;
+            color: white;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px; /* Same size for all buttons */
+        }
+
+        .btn-secondary {
+            background-color: #1f6b3a;
+        }
+
+        .btn-primary {
+            background-color: #3cb371; /* Change Edit button color */
+        }
+
+        .btn-danger {
+            background-color: #dc3545;
+        }
+
+        .btn-secondary:hover {
+            background-color: darkgreen; /* Dark green on hover */
+        }
+
+        .btn-primary:hover {
+            background-color: darkgreen; /* Dark green on hover */
+        }
+
+        .btn-danger:hover {
+            background-color: darkred; /* Dark red on hover */
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="{% url 'home' %}" class="btn btn-secondary" style="margin-bottom: 20px;">Back to Home</a>
+        <h1>Transactions</h1>
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Income</th>
+                    <th>Expense</th>
+                    <th>Remarks</th>
+                    <th>Date</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for transaction in transactions %}
+                <tr>
+                    <td>{{ transaction.pk }}</td>
+                    <td>{{ transaction.income }}</td>
+                    <td>{{ transaction.expense }}</td>
+                    <td>{{ transaction.remarks }}</td>
+                    <td>{{ transaction.date }}</td>
+                    <td>
+                        <a href="{% url 'update_transaction' transaction.pk %}" class="btn btn-primary">Edit</a>
+                        <form action="{% url 'delete_transaction' transaction.pk %}" method="post" style="display:inline;">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-danger">Delete</button>
+                        </form>
+                    </td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="6">No transactions found.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>

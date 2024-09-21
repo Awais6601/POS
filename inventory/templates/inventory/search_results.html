@@ -1,0 +1,188 @@
+{% block content %}
+<head>
+    <style>
+        .search-form-container {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .search-input {
+            padding: 10px;
+            width: 300px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        .search-btn {
+            padding: 10px 15px;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-left: 10px;
+        }
+
+        .search-btn:hover {
+            background-color: #218838;
+        }
+
+        .no-results {
+            text-align: center;
+            color: red;
+            font-weight: bold;
+        }
+
+        .pagination {
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        .pagination a {
+            margin: 0 5px;
+            padding: 8px 12px;
+            background-color: #f0f0f0;
+            text-decoration: none;
+            border-radius: 4px;
+        }
+
+        .pagination a:hover {
+            background-color: #ddd;
+        }
+
+        .pagination .current {
+            font-weight: bold;
+        }
+
+        .table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        .table th, .table td {
+            padding: 10px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .table th {
+            background-color: #f8f8f8;
+        }
+
+        .search-results-container h1 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .search-query {
+            text-align: center;
+            font-size: 1.2em;
+            margin-bottom: 10px;
+            color: #555;
+        }
+
+        .back-home-btn {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #3cb371; 
+            color: white;
+            border: none;
+            border-radius: 4px;
+            text-decoration: none;
+            text-align: center;
+            font-size: 16px;
+            margin-bottom: 20px;
+            cursor: pointer;
+        }
+
+        .back-home-btn:hover {
+            background-color: darkgreen;
+        }
+
+        .back-home-container {
+            text-align: left;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+
+<div class="search-results-container">
+    <!-- Back to Home Button -->
+    <div class="back-home-container">
+        <a href="{% url 'home' %}" class="back-home-btn">Back to Home</a>
+    </div>
+
+    <!-- Centered Heading -->
+    <h1>Search Results</h1>
+
+    <!-- Display the Search Query -->
+    {% if query %}
+        <p class="search-query">You searched for: "{{ query }}"</p>
+    {% endif %}
+
+    <!-- Centered Search Form -->
+    <div class="search-form-container">
+        <form method="GET" action="{% url 'search_orders' %}" class="search-form">
+        </form>
+    </div>
+
+    <div class="results-container">
+        {% if orders %}
+            <table class="table table-bordered mt-4">
+                <thead>
+                    <tr>
+                        <th>Order ID</th>
+                        <th>Customer Name</th>
+                        <th>Product Name</th>
+                        <th>Product Price</th>
+                        <th>Quantity</th>
+                        <th>Total Price</th>
+                        <th>Order Date</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for order in orders %}
+                    <tr>
+                        <td>{{ order.id }}</td>
+                        <td>{{ order.customer_name }}</td>
+                        <td>{{ order.product.Product_name }}</td>
+                        <td>{{ order.product.Product_price }}</td>
+                        <td>{{ order.quantity }}</td>
+                        <td>{{ order.total_price }}</td>
+                        <td>{{ order.order_date }}</td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="7" class="no-results">No orders found.</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+
+            <!-- Pagination -->
+            <div class="pagination">
+                {% if is_paginated %}
+                    <span class="step-links">
+                        {% if page_obj.has_previous %}
+                            <a href="?q={{ query }}&page=1">&laquo; first</a>
+                            <a href="?q={{ query }}&page={{ page_obj.previous_page_number }}">previous</a>
+                        {% endif %}
+
+                        <span class="current">
+                            Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+                        </span>
+
+                        {% if page_obj.has_next %}
+                            <a href="?q={{ query }}&page={{ page_obj.next_page_number }}">next</a>
+                            <a href="?q={{ query }}&page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
+                        {% endif %}
+                    </span>
+                {% endif %}
+            </div>
+        {% else %}
+            <p class="no-results">No results found for your search.</p>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,99 @@
+{% extends 'inventory/base.html' %}
+
+{% block content %}
+
+<!-- Inline CSS for styling buttons -->
+<style>
+    /* Common style for both Update and Delete buttons */
+    .action-button {
+        padding: 10px 20px; /* Same padding for both buttons */
+        font-size: 16px;    /* Same font size */
+        width: 100px;       /* Same width for uniformity */
+        text-align: center; /* Center the text */
+        border-radius: 5px;
+        cursor: pointer;
+        display: inline-block;
+    }
+
+    /* Style for Update button */
+    .btn-primary {
+        background-color: green;
+        color: white;
+        border: none;
+    }
+
+    /* Style for Delete button */
+    .btn-delete {
+        background-color: red;
+        color: white;
+        border: none;
+    }
+
+    /* Hover effect for Update button */
+    .btn-primary:hover {
+        background-color: darkgreen;
+    }
+
+    /* Hover effect for Delete button */
+    .btn-delete:hover {
+        background-color: darkred;
+    }
+</style>
+
+<!-- Container for Add New Button and Search Bar -->
+<div class="header-actions">
+    <div class="add-new-container">
+        <a href="{% url 'add_medicine' %}" class="add-new-button">Add New</a>
+    </div>
+    <div class="search-container">
+        <form method="get" action="{% url 'inventory' %}">
+            <input type="text" name="q" placeholder="Search..." class="search-input">
+            <button type="submit" class="search-button">Search</button>
+        </form>
+    </div>
+</div>
+
+<!-- Inventory Table -->
+<div class="inventory-container">
+    <h2>Inventory List</h2>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Product Name</th>
+                <th>Product Price</th>
+                <th>Quantity</th>
+                <th>Manufacture Date</th>
+                <th>Expiry Date</th>
+                <th>Purchasing Date</th>
+                <th>Actions</th> <!-- Added column for actions -->
+            </tr>
+        </thead>
+        <tbody>
+            {% for medicine in medicines %}
+            <tr>
+                <td>{{ medicine.Product_name }}</td>
+                <td>{{ medicine.Product_price }}</td>
+                <td>{{ medicine.quantity }}</td>
+                <td>{{ medicine.manufacture_date }}</td>
+                <td>{{ medicine.expiry_date }}</td>
+                <td>{{ medicine.purchasing_date }}</td>
+                <td>
+                    <a href="{% url 'update_medicine' medicine.id %}">
+                        <button class="action-button btn-primary">Update</button>
+                    </a>
+                    <form method="post" action="{% url 'delete_medicine' medicine.id %}" style="display:inline;">
+                        {% csrf_token %}
+                        <button type="submit" class="action-button btn-delete">Delete</button> <!-- Updated Delete button class -->
+                    </form>
+                </td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="7">No products available.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+{% endblock %}

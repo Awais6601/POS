@@ -1,0 +1,277 @@
+{% extends 'inventory/base.html' %}
+
+{% block content %}
+<div class="homepage-container">
+    <!-- Display Messages -->
+    {% if messages %}
+        <div class="messages-container">
+            {% for message in messages %}
+                <div class="alert {{ message.tags }}">{{ message }}</div>
+            {% endfor %}
+        </div>
+    {% endif %}
+
+    <div class="orders-transactions-container">
+        <!-- Orders Section -->
+        <div class="orders-section">
+            <h3>Your Orders</h3>
+            <p>Introducing Our Dynamic Orders Management Module.</p>
+            <a href="{% url 'create_order' %}" class="btn btn-primary">Create New Order</a>
+        </div>
+
+        <!-- Transactions Section -->
+        <div class="transactions-section">
+            <h3>Your Daily Transactions</h3>
+            <p>Quick access to our Transaction Management Module.</p>
+            <div class="transaction-buttons">
+                <a href="{% url 'create_transaction' %}" class="btn btn-primary">Create Transaction</a>
+                <a href="{% url 'view_transactions' %}" target="_blank" class="btn btn-primary">View Transactions</a> <!-- Changed class to btn-primary -->
+            </div>
+            <div class="transaction-list" id="transactionList" style="display: none;">
+                {% for transaction in transactions %}
+                    <div class="transaction-item">
+                        <p><strong>Transaction ID:</strong> {{ transaction.pk }}</p>
+                        <p><strong>Type:</strong> {{ transaction.transaction_type }}</p>
+                        <p><strong>Amount:</strong> {{ transaction.amount }}</p>
+                        <p><strong>Date:</strong> {{ transaction.date }}</p>
+                        <p><strong>Remarks:</strong> {{ transaction.remarks }}</p>
+                        <div class="transaction-actions">
+                            <a href="{% url 'update_transaction' transaction.pk %}" class="btn btn-primary">Update Transaction</a>
+                            <form action="{% url 'delete_transaction' transaction.pk %}" method="post" style="display:inline;">
+                                {% csrf_token %}
+                                <button type="submit" class="btn btn-delete">Delete Transaction</button>
+                            </form>
+                        </div>
+                    </div>
+                {% empty %}
+                    <p>No transactions found.</p>
+                {% endfor %}
+            </div>
+        </div>
+
+        <!-- Analytics Section -->
+        <div class="analytics-section">
+            <div class="analytics-box">
+                <h4>Income</h4>
+                <p>Rs. {{ total_income }}</p>
+            </div>
+            <div class="analytics-box">
+                <h4>Expense</h4>
+                <p>Rs. {{ total_expense }}</p>
+            </div>
+            <div class="analytics-box">
+                <h4>Profit</h4>
+                <p>Rs. {{ profit }}</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Date Filter Form -->
+    <div class="date-filter-container">
+        <form method="GET" action="{% url 'home' %}" class="filter-form">
+            <label for="start_date">From:</label>
+            <input type="date" id="start_date" name="start_date" value="{{ start_date }}">
+            <label for="end_date">To:</label>
+            <input type="date" id="end_date" name="end_date" value="{{ end_date }}">
+            <button type="submit" class="btn btn-primary">Filter</button>
+        </form>
+    </div>
+
+    <!-- Orders Table Section -->
+    <div class="table-header">
+        <div class="left-section">
+            <form method="GET" action="{% url 'export_orders_csv' %}">
+                <button type="submit" class="search-btn">Export</button>
+            </form>
+        </div>
+
+        <!-- Search Bar -->
+        <div class="right-section">
+            <form method="GET" action="{% url 'search_orders' %}" class="search-form">
+                <input type="text" name="q" placeholder="Search orders..." class="search-input">
+                <button type="submit" class="search-btn">Search</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Orders Table -->
+    <div class="orders-table">
+        <h4>Orders</h4>
+        <p>Recent orders from your store.</p>
+        <div class="table-container">
+            <table class="table table-bordered mt-4">
+                <thead>
+                    <tr>
+                        <th>Order ID</th>
+                        <th>Customer Name</th>
+                        <th>Product Name</th>
+                        <th>Product Price</th>
+                        <th>Quantity</th>
+                        <th>Total Price</th>
+                        <th>Order Date</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for order in orders %}
+                    <tr>
+                        <td>{{ order.id }}</td>
+                        <td>{{ order.customer_name }}</td>
+                        <td>{{ order.product.Product_name }}</td>
+                        <td>{{ order.product.Product_price }}</td>
+                        <td>{{ order.quantity }}</td>
+                        <td>{{ order.total_price }}</td>
+                        <td>{{ order.order_date|date:"F j, Y, g:i a" }}</td>
+                        <td>
+                            <a href="{% url 'edit_order' order.id %}" class="btn btn-primary btn-sm">Edit</a>
+                            <a href="{% url 'delete_order' order.id %}" class="btn btn-delete btn-sm">Delete</a>
+                        </td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="8">No orders found.</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<!-- Custom Styling for Messages and Analytics -->
+<style>
+    .messages-container {
+        margin-bottom: 20px;
+    }
+
+    .alert {
+        padding: 15px;
+        border-radius: 5px;
+        margin-bottom: 15px;
+    }
+
+    .alert.success {
+        background-color: #cce5ff;
+        color: #004085;
+    }
+
+    .alert.error {
+        background-color: #f8d7da;
+        color: #721c24;
+    }
+
+    .btn-delete {
+        background-color: #e3342f;
+        color: white;
+        border: none;
+        border-radius: 4px;
+        padding: 8px 16px;
+    }
+
+    .btn-delete:hover {
+        background-color: #cc1f1a;
+    }
+
+    .btn-sm {
+        font-size: 0.875rem;
+        padding: 0.25rem 0.5rem;
+    }
+
+    .transaction-buttons {
+        display: flex;
+        gap: 10px;
+        margin-top: 10px;
+    }
+
+    .transaction-btn {
+        padding: 8px 16px;
+    }
+
+    .search-btn {
+        background-color: #3cb371;
+        color: white;
+        padding: 8px 16px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+    }
+
+    .search-btn:hover {
+        background-color: darkgreen;
+    }
+
+    .search-input {
+        padding: 8px;
+        border-radius: 4px;
+        border: 1px solid #2e8b57;
+        margin-right: 8px;
+    }
+
+    .search-form {
+        display: flex;
+        align-items: center;
+    }
+
+    .analytics-section {
+        display: flex;
+        justify-content: space-around;
+        margin-top: 20px;
+    }
+
+    .analytics-box {
+        background-color: #f9f9f9;
+        border: 1px solid #ddd;
+        padding: 15px;
+        border-radius: 5px;
+        width: 30%;
+        text-align: center;
+    }
+
+    .analytics-box h4 {
+        margin-bottom: 10px;
+    }
+
+    .date-filter-container {
+        display: flex;
+        justify-content: flex-end;
+        margin-bottom: 20px;
+    }
+
+    .filter-form {
+        display: flex;
+        align-items: center;
+    }
+
+    .filter-form label {
+        margin-right: 10px;
+    }
+
+    .filter-form input {
+        margin-right: 10px;
+    }
+
+    .btn-primary {
+        background-color: #3cb371; /* Button color */
+        color: white;
+        border: none;
+        border-radius: 4px;
+        padding: 8px 16px;
+    }
+
+    .btn-primary:hover {
+        background-color: darkgreen; /* Hover color */
+    }
+</style>
+
+<!-- JavaScript for Hiding Messages -->
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const alerts = document.querySelectorAll('.alert.success');
+        alerts.forEach(function(alert) {
+            setTimeout(function() {
+                alert.style.display = 'none';
+            }, 2000);
+        });
+    });
+</script>
+{% endblock %}

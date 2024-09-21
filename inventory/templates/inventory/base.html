@@ -1,0 +1,111 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}POS System{% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+
+<!-- Sticky Header -->
+<header class="sticky-header">
+    <h1>POS System</h1>
+    <nav>
+        <ul>
+            <li><a href="{% url 'home' %}">Home</a></li>
+            {% if user.is_authenticated %}
+                <li><a href="{% url 'inventory' %}">Inventory</a></li>
+            {% else %}
+                <li class="login-container">
+                    <a href="{% url 'login' %}" class="login-btn">Login</a>
+                </li>
+            {% endif %}
+        </ul>
+    </nav>
+    {% if user.is_authenticated %}
+        <div class="logout-container">
+            <form method="post" action="{% url 'logout' %}" style="display:inline;">
+                {% csrf_token %}
+                <button type="submit" class="logout-btn">Logout</button>
+            </form>
+        </div>
+    {% endif %}
+</header>
+
+<!-- Main Content -->
+<main>
+    {% block content %}
+    <div class="homepage-container">
+        <div class="orders-transactions-container">
+            <!-- Orders Section -->
+            <div class="orders-section">
+                <h3>Your Orders</h3>
+                <p>Introducing Our Dynamic Orders Management Module.</p>
+                <button class="btn btn-primary">Create New Order</button>
+            </div>
+
+            <!-- Transactions Section -->
+            <div class="transactions-section">
+                <h3>Your Daily Transactions</h3>
+                <p>Quick access to our Transaction Management Module.</p>
+                <button class="btn btn-primary">Create New Transaction</button>
+            </div>
+
+            <!-- Analytics Section -->
+            <div class="analytics-section">
+                <div class="analytics-box">
+                    <h4>Income</h4>
+                    <p>Rs. 0.0</p>
+                </div>
+                <div class="analytics-box">
+                    <h4>Expense</h4>
+                    <p>Rs. 0.0</p>
+                </div>
+                <div class="analytics-box">
+                    <h4>Profit</h4>
+                    <p>Rs. 0.0</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Orders Table Section -->
+        <div class="table-header">
+            <div class="left-section">
+                <button class="recent-btn">Recent</button>
+            </div>
+            <div class="right-section">
+                <button class="filter-btn">Filter</button>
+                <button class="export-btn">Export</button>
+            </div>
+        </div>
+        <div class="orders-table">
+            <h4>Orders</h4>
+            <p>Recent orders from your store.</p>
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Contact</th>
+                            <th>Type</th>
+                            <th>Status</th>
+                            <th>Added on</th>
+                            <th>Due Date</th>
+                            <th>Amount</th>
+                            <th>Discount</th>
+                            <th>Payable</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Add table rows here -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    {% endblock %}
+</main>
+
+</body>
+</html>

@@ -1,0 +1,36 @@
+{% extends 'inventory/base.html' %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Sales List</title>
+</head>
+<body>
+    <h1>Sales List</h1>
+    <a href="{% url 'add_sale' %}">Add Sale</a>
+    <table>
+        <thead>
+            <tr>
+                <th>Customer Name</th>
+                <th>Medicine</th>
+                <th>Quantity</th>
+                <th>Price</th>
+                <th>Total Price</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for sale in sales %}
+                <tr>
+                    <td>{{ sale.customer_name }}</td>
+                    <td>{{ sale.medicine.name }}</td>
+                    <td>{{ sale.quantity }}</td>
+                    <td>{{ sale.price }}</td>
+                    <td>{{ sale.total_price }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <div class="total-sales">
+        <h3>Total Sales: {{ total_sales }}</h3>
+    </div>
+</body>
+</html>

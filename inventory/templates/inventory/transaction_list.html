@@ -1,0 +1,35 @@
+{% block content %}
+<div class="container mt-4"> 
+    <h2>All Transactions</h2>
+    <a href="{% url 'create_transaction' %}" class="btn btn-primary mb-3">Create New Transaction</a>
+    <table class="table table-bordered table-striped">
+        <thead>
+            <tr>
+                <th>Income</th>
+                <th>Expense</th>
+                <th>Remarks</th>
+                <th>Date</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for transaction in transactions %}
+                <tr>
+                    <td>{{ transaction.income }}</td>
+                    <td>{{ transaction.expense }}</td>
+                    <td>{{ transaction.remarks }}</td>
+                    <td>{{ transaction.date }}</td>
+                    <td>
+                        <a href="{% url 'update_transaction' transaction.pk %}" class="btn btn-warning btn-sm">Edit</a>
+                        <a href="{% url 'delete_transaction' transaction.pk %}" class="btn btn-danger btn-sm">Delete</a>
+                    </td>
+                </tr>
+            {% empty %}
+                <tr>
+                    <td colspan="5">No transactions available.</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

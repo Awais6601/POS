@@ -1,0 +1,16 @@
+{% extends "base_generic.html" %}  <!-- Use your base template if you have one -->
+{% block content %}
+    <h2>Delete Transaction</h2>
+    <p>Are you sure you want to delete this transaction?</p>
+    <p><strong>ID:</strong> {{ transaction.pk }}</p>
+    <p><strong>Income:</strong> {{ transaction.income }}</p>
+    <p><strong>Expense:</strong> {{ transaction.expense }}</p>
+    <p><strong>Remarks:</strong> {{ transaction.remarks }}</p>
+    <p><strong>Date:</strong> {{ transaction.date }}</p>
+    
+    <form action="{% url 'delete_transaction' transaction.pk %}" method="post">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-danger">Confirm Delete</button>
+    </form>
+    <a href="{% url 'view_transactions' %}" class="btn btn-secondary">Cancel</a>
+{% endblock %}

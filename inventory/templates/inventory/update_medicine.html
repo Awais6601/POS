@@ -1,0 +1,33 @@
+<!-- inventory/templates/inventory/update_medicine.html -->
+{% extends 'inventory/base.html' %}
+
+{% block content %}
+<div class="add-new-page">
+  <div class="add-new-form-container">
+    <form method="post" action="{% url 'update_medicine' pk=medicine.id %}">
+      {% csrf_token %}
+
+      <label for="name">Product Name:</label>
+      <input type="text" id="Product_name" name="Product_name" value="{{ form.Product_name.value }}" required>
+
+      <label for="price">Product Price:</label>
+      <input type="number" id="Product_price" name="Product_price" value="{{ form.Product_price.value }}" required>
+
+      <label for="quantity">Quantity:</label>
+      <input type="number" id="quantity" name="quantity" value="{{ form.quantity.value }}" required>
+
+      <label for="manufacture_date">Manufacture Date:</label>
+      <input type="date" id="manufacture_date" name="manufacture_date" value="{{ medicine.manufacture_date|date:'Y-m-d' }}" required>
+      
+      <label for="expiry_date">Expiry Date:</label>
+      <input type="date" id="expiry_date" name="expiry_date" value="{{ medicine.expiry_date|date:'Y-m-d' }}" required>
+      
+      <label for="purchasing_date">Purchasing Date:</label>
+      <input type="date" id="purchasing_date" name="purchasing_date" value="{{ medicine.purchasing_date|date:'Y-m-d' }}" required>
+      
+
+      <button type="submit">Update</button>
+    </form>
+  </div>
+</div>
+{% endblock %}

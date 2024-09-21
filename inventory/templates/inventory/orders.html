@@ -1,0 +1,48 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recent Orders</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}"> <!-- Link your CSS if needed -->
+</head>
+<body>
+    <header>
+        <h1>Recent Orders</h1>
+    </header>
+
+    <section>
+        {% if orders %}
+            <table>
+                <thead>
+                    <tr>
+                        <th>Order ID</th>
+                        <th>Customer</th>
+                        <th>Date</th>
+                        <th>Status</th>
+                        <th>Total Amount</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for order in orders %}
+                    <tr>
+                        <td>{{ order.id }}</td>
+                        <td>{{ order.customer }}</td>
+                        <td>{{ order.date }}</td>
+                        <td>{{ order.status }}</td>
+                        <td>{{ order.total_amount }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% else %}
+            <p>No orders available at the moment.</p>
+        {% endif %}
+    </section>
+
+    <footer>
+        <p>&copy; 2024 Your Inventory System</p>
+    </footer>
+</body>
+</html>

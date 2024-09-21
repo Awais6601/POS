@@ -1,0 +1,30 @@
+<!-- Display Income, Expense, and Profit -->
+<div class="row">
+    <div class="col">
+        <h3>Income</h3>
+        <p>Rs. {{ total_income }}</p>
+    </div>
+    <div class="col">
+        <h3>Expense</h3>
+        <p>Rs. {{ total_expense }}</p>
+    </div>
+    <div class="col">
+        <h3>Profit</h3>
+        <p>Rs. {{ profit }}</p>
+    </div>
+</div>
+
+<!-- Debugging: Check if date variables are being passed -->
+<p>Start Date: {{ start_date }}</p>
+<p>End Date: {{ end_date }}</p>
+
+<!-- Date Filter Form -->
+<form method="GET" action="{% url 'home' %}">
+    <label for="start_date">From:</label>
+    <input type="date" id="start_date" name="start_date" value="{{ start_date }}">
+    
+    <label for="end_date">To:</label>
+    <input type="date" id="end_date" name="end_date" value="{{ end_date }}">
+    
+    <button type="submit">Filter</button>
+</form>

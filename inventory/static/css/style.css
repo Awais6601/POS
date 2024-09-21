@@ -1,0 +1,657 @@
+/* Import Google Fonts */
+@import url('https://fonts.googleapis.com/css?family=Open+Sans:300,400,700&display=swap');
+
+/* Root Colors */
+:root {
+  --parrot-green: #3cb371;
+  --dark-blue: #40587c;
+  --grey: #b2b2b2;
+}
+
+/* Global Styles for all devices */
+body {
+  font-family: 'Open Sans', sans-serif;
+  background-color: #f4f4f4;
+  margin: 0;
+  padding: 0;
+}
+
+/* Header Styles */
+header {
+  background-color: var(--parrot-green);
+  height: 50px;
+  display: flex;
+  align-items: center;
+  padding: 0 20px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+}
+
+/* Flex container for header elements */
+.header-container {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  justify-content: space-between; /* Space between title, nav, and logout */
+}
+
+/* Title styles */
+header h1 {
+  color: white;
+  font-size: 24px;
+  margin: 0;
+  font-weight: bold;
+}
+
+/* Navigation styles */
+nav {
+  flex-grow: 1; /* Take up available space */
+  display: flex;
+  justify-content: center; /* Center nav items */
+}
+
+nav ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+}
+
+nav li {
+  margin: 0 20px; /* Increase the margin for more space between links */
+}
+
+nav a {
+  color: white;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+nav a:hover {
+  text-decoration: underline;
+}
+/* Login button styling */
+.login-container {
+  position: absolute;
+  right: 20px; /* Move to the right corner */
+  top: 50%;
+  transform: translateY(-50%);}
+
+.login-btn {
+  background-color: #006117; /* Dark green color */
+  color: white;
+  padding: 5px 10px;
+  border-radius: 4px;
+  text-decoration: none; /* No underline by default */
+
+}
+
+.login-btn:hover {
+  background-color: #002e0a; /* Darker shade on hover */
+}
+
+/* Logout button styling */
+.logout-container {
+  margin-left: auto; /* Pushes the container to the right */
+}
+
+.logout-btn {
+  background-color: #c60014; /* Red color */
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.logout-btn:hover {
+  background-color: #86000d; /* Darker shade on hover */
+}
+
+/* Center the content within the viewport */
+.center-content {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh; /* Full viewport height */
+}
+
+/* Add some padding and styling to the form container */
+.form-container {
+  padding: 20px;
+  max-width: 400px; /* Set a maximum width for the form container */
+  margin: 0 auto;
+  border: 1px solid #ddd; /* Optional: border around the form */
+  border-radius: 8px; /* Optional: rounded corners */
+  background-color: #fff; /* Optional: background color */
+}
+
+/* Center the login title */
+body.login-page {
+  background-color: var(--parrot-green); /* Parrot green background */
+}
+.form-container h2 {
+  text-align: center;
+  margin-bottom: 20px; /* Space below the title */
+}
+
+/* Style the form container to left-align its children */
+.form-container form {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start; /* Align form fields to the left */
+}
+
+/* Style the labels */
+.form-container label {
+  margin-bottom: 5px; /* Space between label and input field */
+  font-weight: bold;
+}
+
+/* Style the form input fields with a green border */
+.form-container input[type="text"],
+.form-container input[type="password"] {
+  margin-bottom: 10px; /* Space between form elements */
+  padding: 10px;
+  border: 2px solid #3cb371; /* Green border color */
+  border-radius: 4px;
+  width: 90%; /* Make input fields take full width */
+}
+
+/* Dark green border color on focus */
+.form-container input[type="text"]:focus,
+.form-container input[type="password"]:focus {
+  border: 2px solid #004d00; /* Dark green border color on focus */
+  outline: none; /* Remove default outline */
+}
+
+.form-container button {
+  margin-bottom: 10px; /* Space between form elements */
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  width: 100%; /* Make input fields and button take full width */
+}
+
+.form-container button {
+  background-color: darkgreen; /* Dark green background for the button */
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+
+.form-container button:hover {
+  background-color: rgb(0, 39, 0); /* Darker blue on hover (optional) */
+}
+
+/* Style for the Update Name button */
+.update-button {
+  background-color: darkgreen; /* Same background color */
+  color: white; /* Same text color */
+  border: none; /* No border */
+  padding: 8px 16px;
+  display: inline-block; /* Inline block to keep it on the same line */
+  /* Same padding */
+  border-radius: 4px; /* Same border radius */
+  width: auto; /* Adjust width to content */
+  cursor: pointer; /* Pointer cursor */
+  font-size: 14px; /* Same font size */
+  text-align: center; /* Center text inside button */
+  font-size: 14px; /* Same font size */
+  text-decoration: none; /* Remove underline from link */
+  margin: 5px; /* Optional: space around button */
+
+}
+
+.update-button:hover {
+  background-color: rgb(0, 39, 0); /* Same hover color */
+}
+
+
+/* Style for the Delete button */
+.btn-delete {
+  background-color: red; /* Red background color for the delete button */
+  color: white; /* White text color */
+  border: none; /* No border */
+  padding: 8px 16px; /* Padding for top/bottom and left/right */
+  border-radius: 4px; /* Rounded corners */
+  display: inline-block; /* Inline block to keep it on the same line */
+  text-align: center; /* Center text inside button */
+  cursor: pointer; /* Pointer cursor */
+  font-size: 14px; /* Font size */
+  text-decoration: none; /* Remove underline from link */
+  margin: 5px; /* Optional: space around button */
+}
+
+.btn-delete:hover {
+  background-color: darkred; /* Dark red background on hover */
+}
+
+
+
+/*inventory*/
+/* Container for Add New Button and Search Bar */
+.header-actions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px;
+  margin-top: 80px; /* Adjust margin to ensure space for fixed header */
+}
+
+
+
+
+/*Add New */
+.add-new-button {
+  background-color: var(--parrot-green);
+  color: white;
+  text-decoration: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  font-size: 16px;
+}
+
+.add-new-button:hover {
+  background-color: #2e8b57;
+}
+
+
+
+
+
+/* Container for the Add New form */
+.add-new-form-container {
+  padding: 20px;  /* Padding around the form content */
+  width: 80vw; /* Set the width to 80% of the viewport width */
+  max-width: 1000px; /* Optional: limit the maximum width */
+  height: auto; /* Automatically adjust the height based on content */
+  margin: 0 auto; /* Center horizontally */
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  background-color: #fff;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Full Page Background */
+.add-new-page {
+  background-color: #3cb371; /* Parrot green background */
+  min-height: 100vh; /* Ensure the background color covers the entire page */
+  margin: 0; /* Remove any margin */
+  display: flex;
+  justify-content: center;
+  align-items: center; /* Center the form vertically */
+}
+
+
+
+/* Center the form title */
+.add-new-form-container h2 {
+  text-align: center;
+  margin-bottom: 15px;
+}
+
+/* Style the form elements */
+.add-new-form-container form {
+  display: flex;
+  flex-direction: column;
+}
+
+.add-new-form-container label {
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+
+.add-new-form-container input[type="text"],
+.add-new-form-container input[type="number"],
+.add-new-form-container input[type="date"] {
+  margin-bottom: 10px;
+  padding: 8px;  /* Slightly smaller padding for inputs */
+  border: 1px solid gray;
+  border-radius: 4px;
+  width: 90%;
+}
+
+.add-new-form-container input[type="text"]:focus,
+.add-new-form-container input[type="number"]:focus,
+.add-new-form-container input[type="date"]:focus {
+  border: 2px solid #004d00;
+  outline: none;
+}
+
+/* Style the submit button */
+.add-new-form-container button {
+  background-color: darkgreen;
+  color: white;
+  border: none;
+  padding: 8px; /* Slightly smaller button size */
+  border-radius: 4px;
+  width: 10%;
+  cursor: pointer;
+  font-size: 14px;  /* Slightly smaller font size */
+}
+
+.add-new-form-container button:hover {
+  background-color: rgb(0, 39, 0);
+}
+
+
+
+
+
+
+
+
+
+
+
+.search-container {
+  display: flex;
+}
+
+.search-input {
+  padding: 8px;
+  font-size: 14px;
+  border: 1px solid var(--parrot-green);
+  border-radius: 5px;
+  margin-right: 5px;
+}
+
+.search-input:hover,
+.search-input:focus {
+  border: 2px solid #004d00; /* Dark green border color on hover/focus */
+  outline: none; /* Remove default outline */
+}
+
+.search-button {
+  background-color: var(--parrot-green);
+  color: white;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.search-button:hover {
+  background-color: #2e8b57;
+}
+
+
+/* Update Form Container */
+.update-container {
+  max-width: 600px;
+  margin: 20px auto;
+  padding: 20px;
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.update-container h2 {
+  margin-top: 0;
+  text-align: center;
+}
+
+.form-actions {
+  margin-top: 20px;
+  text-align: center;
+}
+
+.btn {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.btn-primary {
+  background-color: var(--parrot-green);
+  color: white;
+}
+
+.btn-primary:hover {
+  background-color: #2e8b57;
+}
+
+.btn-secondary {
+  background-color: #ccc;
+  color: black;
+}
+
+.btn-secondary:hover {
+  background-color: #aaa;
+}
+
+
+
+
+/* Inventory Table Styles */
+.inventory-container {
+  max-width: 1000px;
+  margin: 20px auto;
+  padding: 20px;
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.inventory-container h2 {
+  text-align: center;
+  margin-top: 0;
+}
+
+.inventory-container table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.inventory-container th, .inventory-container td {
+  padding: 10px;
+  border: 1px solid var(--grey);
+  text-align: center;
+}
+
+.inventory-container th {
+  background-color: var(--dark-blue);
+  color: white;
+}
+
+.inventory-container tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+/* Media Query for larger resolution (1920x1080) */
+@media (min-width: 1920px) and (min-height: 1080px) {
+  .inventory-container {
+    max-width: 800px;
+    padding: 40px;
+  }
+
+  .search-input, .search-button {
+    font-size: 18px;
+    padding: 12px;
+  }
+
+  .search-button {
+    padding: 12px 25px;
+  }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+.homepage-container {
+  display: flex;
+  flex-direction: column;
+  margin-top: 50px;
+  gap: 20px;
+  padding: 20px;
+}
+
+.orders-transactions-container {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+.orders-section, .transactions-section {
+  background-color: #f9f9f9;
+  padding: 15px;
+  width: 30%;
+  border: 1px solid grey;
+  border-radius: 5px;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+}
+
+.analytics-section {
+  display: flex;
+  gap: 20px;
+  width: 30%;
+}
+
+.analytics-box {
+  background-color: #f9f9f9;
+  padding: 10px;
+  text-align: center;
+  width: 100px;
+  border: 1px solid grey;
+  border-radius: 5px;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+}
+
+.orders-section h3, .transactions-section h3 {
+  font-size: 16px;
+  margin-bottom: 10px;
+}
+
+.btn-primary {
+  background-color: var(--parrot-green);
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 4px;
+  cursor: pointer;
+  text-align: center;
+}
+
+.btn-primary:hover {
+  background-color: darkgreen;
+}
+
+.orders-table {
+  background-color: #fff;
+  padding: 15px;
+  border: 1px solid grey;
+  border-radius: 5px;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+}
+
+.orders-table table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 10px;
+}
+
+.orders-table th, .orders-table td {
+  padding: 10px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+}
+
+.orders-table th {
+  background-color: #f1f1f1;
+  font-weight: bold;
+}
+
+/* Orders Table styling */
+.orders-table {
+  background-color: #fff;
+  padding: 15px;
+  border: 1px solid grey;
+  border-radius: 5px;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+}
+
+.orders-table table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 10px;
+}
+
+.orders-table th, .orders-table td {
+  padding: 10px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+}
+
+.orders-table th {
+  background-color: #f1f1f1;
+  font-weight: bold;
+}
+
+/* Table Header styling */
+.table-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.left-section .recent-btn {
+    background-color: var(--parrot-green);
+    border: 1px solid #ddd;
+    padding: 8px 16px;
+    cursor: pointer;
+    font-size: 14px;
+    color: #fff;
+    border-radius: 5px;
+}
+
+.left-section .recent-btn:hover {
+    background-color: darkgreen;
+}
+
+.right-section .filter-btn, .right-section .export-btn {
+    background-color: #3cb371;
+    border: 1px solid #ddd;
+    color: white;
+    padding: 8px 16px;
+    margin-left: 10px;
+    cursor: pointer;
+    font-size: 14px;
+    border-radius: 5px;
+}
+
+.right-section .filter-btn:hover, .right-section .export-btn:hover {
+    background-color: darkgreen;
+}
+
+
+.search-btn {
+  background-color: #3cb371;
+  border: 1px solid #ddd;
+  color: white;
+  padding: 8px 16px;
+  margin-left: 10px;
+  cursor: pointer;
+  font-size: 14px;
+  border-radius: 5px;
+}
+
+.search-btn:hover {
+  background-color: darkgreen; /* Same hover effect */
+}

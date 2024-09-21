@@ -1,0 +1,43 @@
+{% extends 'inventory/base.html' %}
+
+{% block content %}
+<div class="add-new-page">
+  <div class="add-new-form-container">
+    <form method="post" action="{% url 'add_medicine' %}">
+      {% csrf_token %}
+
+      <div class="form-group">
+        <label for="Product_name">Product Name:</label>
+        <input type="text" id="Product_name" name="Product_name" required class="form-control">
+      </div>
+
+      <div class="form-group">
+        <label for="Product_price">Product Price:</label>
+        <input type="number" id="Product_price" name="Product_price" required class="form-control" step="0.01">
+      </div>
+
+      <div class="form-group">
+        <label for="quantity">Quantity:</label>
+        <input type="number" id="quantity" name="quantity" required class="form-control">
+      </div>
+
+      <div class="form-group">
+        <label for="manufacture_date">Manufacture Date:</label>
+        <input type="date" id="manufacture_date" name="manufacture_date" required class="form-control">
+      </div>
+
+      <div class="form-group">
+        <label for="expiry_date">Expiry Date:</label>
+        <input type="date" id="expiry_date" name="expiry_date" required class="form-control">
+      </div>
+
+      <div class="form-group">
+        <label for="purchasing_date">Purchasing Date:</label>
+        <input type="date" id="purchasing_date" name="purchasing_date" required class="form-control">
+      </div>
+
+      <button type="submit" class="btn btn-success">Submit</button>
+    </form>
+  </div>
+</div>
+{% endblock %}
