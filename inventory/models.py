@@ -9,7 +9,7 @@ class Medicine(models.Model):
     manufacture_date = models.DateField()
     expiry_date = models.DateField()
     Product_price = models.DecimalField(max_digits=10, decimal_places=2)
-    quantity = models.PositiveIntegerField()
+    quantity = models.PositiveIntegerField()  # Stock for the product
 
     def __str__(self):
         return self.Product_name
@@ -17,7 +17,7 @@ class Medicine(models.Model):
 class Order(models.Model):
     order_id = models.UUIDField(default=uuid.uuid4, editable=False, unique=True)
     customer_name = models.CharField(max_length=100)
-    product = models.ForeignKey(Medicine, on_delete=models.CASCADE)  # ForeignKey to Medicine
+    product = models.ForeignKey(Medicine, on_delete=models.CASCADE)
     quantity = models.IntegerField()
     total_price = models.DecimalField(max_digits=10, decimal_places=2, blank=True)
     order_date = models.DateTimeField(default=timezone.now)

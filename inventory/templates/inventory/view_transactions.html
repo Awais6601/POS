@@ -88,7 +88,6 @@
                     <th>ID</th>
                     <th>Income</th>
                     <th>Expense</th>
-                    <th>Remarks</th>
                     <th>Date</th>
                     <th>Actions</th>
                 </tr>
@@ -99,7 +98,6 @@
                     <td>{{ transaction.pk }}</td>
                     <td>{{ transaction.income }}</td>
                     <td>{{ transaction.expense }}</td>
-                    <td>{{ transaction.remarks }}</td>
                     <td>{{ transaction.date }}</td>
                     <td>
                         <a href="{% url 'update_transaction' transaction.pk %}" class="btn btn-primary">Edit</a>

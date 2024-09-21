@@ -246,12 +246,34 @@ def export_orders_csv(request):
 @login_required
 def edit_order(request, order_id):
     order = get_object_or_404(Order, id=order_id)  # Fetch the order by ID
+    old_product = order.product  # Store the old product before updating
+    old_quantity = order.quantity  # Store the old quantity before updating
+
     if request.method == 'POST':
         form = OrderForm(request.POST, instance=order)  # Prepopulate the form with existing data
         if form.is_valid():
-            updated_order = form.save(commit=False)  # Update order instance without saving to database
-            updated_order.total_price = updated_order.product.Product_price * updated_order.quantity  # Recalculate total price
+            updated_order = form.save(commit=False)  # Update order instance without saving to the database
+            new_product = updated_order.product  # Fetch the new product (if changed)
+            new_quantity = updated_order.quantity  # Fetch the new quantity
+
+            # If the product has been changed, restore the quantity of the old product
+            if old_product != new_product:
+                old_product.quantity += old_quantity  # Restore old product's quantity
+                old_product.save()
+
+                # Deduct the new quantity from the new product's stock
+                new_product.quantity -= new_quantity
+                new_product.save()
+            else:
+                # If the product remains the same, adjust the quantity based on the difference
+                quantity_diff = new_quantity - old_quantity
+                new_product.quantity -= quantity_diff  # Adjust the quantity
+                new_product.save()
+
+            # Recalculate the total price
+            updated_order.total_price = updated_order.product.Product_price * updated_order.quantity
             updated_order.save()  # Save the updated order
+
             return redirect('home')  # Redirect back to home after editing
     else:
         form = OrderForm(instance=order)  # Load the form with current order data
